@@ -1,129 +1,134 @@
 import { useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
 
-import { useNavigate } from "react-router-dom";
+import API from "../../api/axios";
 
-import { loginUser } from "../../services/authService";
-
-import "./Login.css";
-
-
-function Login() {
+const Login = () => {
 
     const navigate = useNavigate();
 
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
 
-    const [formData, setFormData] = useState({
-        email: "",
-        password: ""
-    });
+    const handleLogin = async (e) => {
 
-
-    const [error, setError] = useState("");
-
-    const [loading, setLoading] = useState(false);
-
-
-    const handleChange = (event) => {
-
-        setFormData({
-            ...formData,
-            [event.target.name]: event.target.value
-        });
-    };
-
-
-    const handleSubmit = async (event) => {
-
-        event.preventDefault();
-
-        setError("");
-
-        setLoading(true);
+        e.preventDefault();
 
         try {
 
-            const response = await loginUser(formData);
+            const formData = new URLSearchParams();
+
+            formData.append("username", email);
+            formData.append("password", password);
+
+            const response = await API.post(
+                "/auth/login",
+                formData,
+                {
+                    headers: {
+                        "Content-Type": "application/x-www-form-urlencoded"
+                    }
+                }
+            );
 
             localStorage.setItem(
                 "token",
-                response.access_token
+                response.data.access_token
             );
 
+            alert("Login successful!");
+
             navigate("/");
-        }
 
-        catch (error) {
+        } catch (error) {
 
-            console.log(error);
+            console.error(error);
 
-            setError("Invalid email or password");
-        }
-
-        finally {
-
-            setLoading(false);
+            alert("Invalid email or password");
         }
     };
 
-
     return (
 
-        <div className="login-container">
+        <div
+            style={{
+                minHeight: "100vh",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                backgroundColor: "#0b1020",
+                color: "white"
+            }}
+        >
 
             <form
-                className="login-form"
-                onSubmit={handleSubmit}
+                onSubmit={handleLogin}
+                style={{
+                    width: "350px",
+                    padding: "30px",
+                    backgroundColor: "#1a2238",
+                    borderRadius: "10px"
+                }}
             >
 
-                <h1>
+                <h1 style={{ marginBottom: "20px" }}>
                     Login
                 </h1>
 
-
                 <input
                     type="email"
-                    name="email"
-                    placeholder="Enter email"
-                    value={formData.email}
-                    onChange={handleChange}
+                    placeholder="Email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                     required
+                    style={{
+                        width: "100%",
+                        padding: "10px",
+                        marginBottom: "15px"
+                    }}
                 />
-
 
                 <input
                     type="password"
-                    name="password"
-                    placeholder="Enter password"
-                    value={formData.password}
-                    onChange={handleChange}
+                    placeholder="Password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
                     required
+                    style={{
+                        width: "100%",
+                        padding: "10px",
+                        marginBottom: "15px"
+                    }}
                 />
-
-
-                {
-                    error && (
-                        <p className="error-text">
-                            {error}
-                        </p>
-                    )
-                }
-
 
                 <button
                     type="submit"
+                    style={{
+                        width: "100%",
+                        padding: "10px",
+                        backgroundColor: "#2563eb",
+                        color: "white",
+                        border: "none",
+                        cursor: "pointer"
+                    }}
                 >
-                    {
-                        loading
-                            ? "Logging in..."
-                            : "Login"
-                    }
+                    Login
                 </button>
+
+                <p style={{ marginTop: "15px" }}>
+                    Don't have an account?{" "}
+                    <Link
+                        to="/register"
+                        style={{ color: "#60a5fa" }}
+                    >
+                        Register
+                    </Link>
+                </p>
 
             </form>
 
         </div>
     );
-}
-
+};
 
 export default Login;

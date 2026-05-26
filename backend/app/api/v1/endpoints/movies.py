@@ -1,28 +1,53 @@
 from fastapi import APIRouter
+import requests
 
-from app.services.tmdb_service import (
-    get_trending_movies,
-    search_movies,
-    get_movie_details
-)
+from app.core.config import settings
 
 
 router = APIRouter()
 
 
-@router.get("/trending")
-def trending_movies():
+BASE_URL = "https://api.themoviedb.org/3"
 
-    return get_trending_movies()
+
+@router.get("/trending")
+def get_trending_movies():
+
+    url = f"{BASE_URL}/trending/movie/week"
+
+    params = {
+        "api_key": settings.TMDB_API_KEY
+    }
+
+    response = requests.get(url, params=params)
+
+    return response.json()
 
 
 @router.get("/search")
-def search_movie(query: str):
+def search_movies(query: str):
 
-    return search_movies(query)
+    url = f"{BASE_URL}/search/movie"
+
+    params = {
+        "api_key": settings.TMDB_API_KEY,
+        "query": query
+    }
+
+    response = requests.get(url, params=params)
+
+    return response.json()
 
 
 @router.get("/{movie_id}")
-def movie_details(movie_id: int):
+def get_movie_details(movie_id: int):
 
-    return get_movie_details(movie_id)
+    url = f"{BASE_URL}/movie/{movie_id}"
+
+    params = {
+        "api_key": settings.TMDB_API_KEY
+    }
+
+    response = requests.get(url, params=params)
+
+    return response.json()

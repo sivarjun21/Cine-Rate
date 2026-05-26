@@ -5,6 +5,8 @@ node_modules/
 venv/
 env/
 __pycache__/
+venv_new/
+alembic/
 
 # Environment variables (Never upload your secrets!)
 .env

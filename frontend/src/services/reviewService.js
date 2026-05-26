@@ -1,6 +1,7 @@
 import API from "../api/axios";
 
 
+// Get reviews for a movie
 export const getMovieReviews = async (movieId) => {
 
     const response = await API.get(
@@ -11,21 +12,12 @@ export const getMovieReviews = async (movieId) => {
 };
 
 
+// Create a new review
 export const createReview = async (reviewData) => {
 
     const response = await API.post(
-        "/reviews",
+        "/reviews/",
         reviewData
-    );
-
-    return response.data;
-};
-
-
-export const deleteReview = async (reviewId) => {
-
-    const response = await API.delete(
-        `/reviews/${reviewId}`
     );
 
     return response.data;

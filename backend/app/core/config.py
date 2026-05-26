@@ -1,18 +1,20 @@
-from dotenv import load_dotenv
-
-import os
+from pydantic_settings import BaseSettings
 
 
-load_dotenv()
+class Settings(BaseSettings):
 
+    DATABASE_URL: str
 
-class Settings:
+    SECRET_KEY: str
 
-    TMDB_API_KEY = os.getenv("TMDB_API_KEY")
+    ALGORITHM: str
 
-    TMDB_BASE_URL = os.getenv(
-        "TMDB_BASE_URL"
-    )
+    ACCESS_TOKEN_EXPIRE_MINUTES: int
+
+    TMDB_API_KEY: str
+
+    class Config:
+        env_file = ".env"
 
 
 settings = Settings()
