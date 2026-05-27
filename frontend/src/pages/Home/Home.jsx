@@ -1,6 +1,4 @@
-import { useEffect } from "react";
-
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import MovieCard from "../../components/MovieCard/MovieCard";
 
@@ -34,14 +32,25 @@ function Home() {
 
             setLoading(true);
 
-            const data = await getTrendingMovies();
+            const response =
+                await getTrendingMovies();
 
-            setMovies(data);
+            console.log(
+                "Trending response:",
+                response
+            );
+
+            setMovies(
+                response.results || response
+            );
         }
 
         catch (error) {
 
-            console.log(error);
+            console.log(
+                "Trending movies error:",
+                error
+            );
         }
 
         finally {
@@ -66,16 +75,27 @@ function Home() {
 
             setLoading(true);
 
-            const data = await searchMovies(
-                searchQuery
+            const response =
+                await searchMovies(
+                    searchQuery
+                );
+
+            console.log(
+                "Search response:",
+                response
             );
 
-            setMovies(data);
+            setMovies(
+                response.results || response
+            );
         }
 
         catch (error) {
 
-            console.log(error);
+            console.log(
+                "Search error:",
+                error
+            );
         }
 
         finally {
@@ -130,13 +150,22 @@ function Home() {
                     <div className="movies-grid">
 
                         {
-                            movies.map((movie) => (
+                            movies?.length > 0 ? (
 
-                                <MovieCard
-                                    key={movie.id}
-                                    movie={movie}
-                                />
-                            ))
+                                movies.map((movie) => (
+
+                                    <MovieCard
+                                        key={movie.id}
+                                        movie={movie}
+                                    />
+                                ))
+
+                            ) : (
+
+                                <h2 className="loading-text">
+                                    No movies found
+                                </h2>
+                            )
                         }
 
                     </div>

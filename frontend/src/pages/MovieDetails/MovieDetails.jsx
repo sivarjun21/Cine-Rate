@@ -20,7 +20,6 @@ function MovieDetails() {
 
     const { id } = useParams();
 
-
     const [movie, setMovie] = useState(null);
 
     const [reviews, setReviews] = useState([]);
@@ -28,7 +27,6 @@ function MovieDetails() {
     const [loading, setLoading] = useState(true);
 
     const [error, setError] = useState("");
-
 
     const [reviewData, setReviewData] = useState({
         rating: "",
@@ -49,7 +47,8 @@ function MovieDetails() {
 
             setLoading(true);
 
-            const movieResponse = await getMovieById(id);
+            const movieResponse =
+                await getMovieById(id);
 
             setMovie(movieResponse);
 
@@ -60,7 +59,9 @@ function MovieDetails() {
 
                 setReviews(reviewResponse);
 
-            } catch {
+            }
+
+            catch {
 
                 setReviews([]);
             }
@@ -71,7 +72,9 @@ function MovieDetails() {
 
             console.log(error);
 
-            setError("Failed to load movie");
+            setError(
+                "Failed to load movie"
+            );
         }
 
         finally {
@@ -84,7 +87,9 @@ function MovieDetails() {
     const handleChange = (event) => {
 
         setReviewData({
+
             ...reviewData,
+
             [event.target.name]:
                 event.target.value
         });
@@ -98,14 +103,28 @@ function MovieDetails() {
 
         try {
 
-            await createReview({
+            const reviewPayload = {
+
                 movie_id: Number(id),
+
+                movie_title: movie.title,
+
                 rating: Number(
                     reviewData.rating
                 ),
+
                 review_text:
-                    reviewData.review_text
-            });
+                    reviewData.review_text,
+
+                username:
+                    localStorage.getItem(
+                        "username"
+                    )
+            };
+
+            await createReview(
+                reviewPayload
+            );
 
             setReviewData({
                 rating: "",
@@ -130,6 +149,7 @@ function MovieDetails() {
     if (loading) {
 
         return (
+
             <h1 className="status-text">
                 Loading movie...
             </h1>
@@ -140,6 +160,7 @@ function MovieDetails() {
     if (error) {
 
         return (
+
             <h1 className="status-text">
                 {error}
             </h1>
@@ -159,7 +180,9 @@ function MovieDetails() {
                             ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
                             : "https://via.placeholder.com/300x450"
                     }
+
                     alt={movie.title}
+
                     className="details-poster"
                 />
 
@@ -203,20 +226,30 @@ function MovieDetails() {
 
                     <input
                         type="number"
+
                         name="rating"
+
                         placeholder="Rating out of 10"
+
                         value={reviewData.rating}
+
                         onChange={handleChange}
+
                         min="1"
+
                         max="10"
+
                         required
                     />
 
 
                     <textarea
                         name="review_text"
+
                         placeholder="Write your review..."
+
                         value={reviewData.review_text}
+
                         onChange={handleChange}
                     />
 
@@ -245,13 +278,12 @@ function MovieDetails() {
 
                     ) : (
 
-                        reviews.map((review) => (
+                        reviews.map((review, index) => (
 
                             <ReviewCard
-                                key={review.id}
+                                key={index}
                                 review={review}
                             />
-
                         ))
                     )
                 }

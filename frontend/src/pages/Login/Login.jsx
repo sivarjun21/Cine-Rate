@@ -36,6 +36,16 @@ const Login = () => {
                 response.data.access_token
             );
 
+            localStorage.setItem(
+                "username",
+                email.split("@")[0]
+            );
+
+            localStorage.setItem(
+                "email",
+                email
+            );
+
             alert("Login successful!");
 
             navigate("/");

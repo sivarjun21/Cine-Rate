@@ -1,67 +1,65 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import "./Navbar.css";
 
 
 function Navbar() {
 
-    const navigate = useNavigate();
+    const username =
+        localStorage.getItem("username");
 
-    const token = localStorage.getItem("token");
-
-
-    const handleLogout = () => {
-
-        localStorage.removeItem("token");
-
-        navigate("/login");
-    };
+    const email =
+        localStorage.getItem("email");
 
 
     return (
+
         <nav className="navbar">
 
-            <div className="navbar-left">
-                <Link to="/" className="logo">
-                    CineRate
-                </Link>
-            </div>
+            <Link
+                to="/"
+                className="logo"
+            >
+                CineRate
+            </Link>
 
 
-            <div className="navbar-right">
+            <div className="profile-container">
 
-                <Link to="/">
-                    Home
-                </Link>
+                <div className="profile-icon">
+                    👤
+                </div>
 
-                {
-                    token ? (
-                        <>
-                            <button
-                                onClick={handleLogout}
-                                className="logout-btn"
-                            >
-                                Logout
-                            </button>
-                        </>
-                    ) : (
-                        <>
-                            <Link to="/login">
-                                Login
-                            </Link>
 
-                            <Link to="/register">
-                                Register
-                            </Link>
-                        </>
-                    )
-                }
+                <div className="profile-dropdown">
+
+                    <p>
+                        <strong>
+                            Username:
+                        </strong>{" "}
+                        {username}
+                    </p>
+
+                    <p>
+                        <strong>
+                            Email:
+                        </strong>{" "}
+                        {email}
+                    </p>
+
+                    <Link
+                        to="/profile"
+                        className="profile-link"
+                    >
+                        View Profile
+                    </Link>
+
+                </div>
 
             </div>
 
         </nav>
     );
 }
-
 
 export default Navbar;

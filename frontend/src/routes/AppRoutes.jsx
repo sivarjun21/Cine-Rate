@@ -1,11 +1,20 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import {
+    BrowserRouter,
+    Routes,
+    Route
+} from "react-router-dom";
 
 import Navbar from "../components/Navbar/Navbar";
 
 import Home from "../pages/Home/Home";
+
 import Login from "../pages/Login/Login";
+
 import Register from "../pages/Register/Register";
+
 import MovieDetails from "../pages/MovieDetails/MovieDetails";
+
+import Profile from "../pages/Profile/Profile";
 
 
 function AppRoutes() {
@@ -39,6 +48,12 @@ function AppRoutes() {
                 <Route
                     path="/movies/:id"
                     element={<MovieDetails />}
+                />
+
+
+                <Route
+                    path="/profile"
+                    element={<Profile />}
                 />
 
             </Routes>

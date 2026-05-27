@@ -10,7 +10,7 @@ function ReviewCard({ review }) {
             <div className="review-header">
 
                 <h3 className="review-username">
-                    {review.user?.username || "Anonymous"}
+                    {review.username}
                 </h3>
 
                 <span className="review-rating">
@@ -19,7 +19,6 @@ function ReviewCard({ review }) {
 
             </div>
 
-
             <p className="review-text">
                 {review.review_text}
             </p>
@@ -27,6 +26,5 @@ function ReviewCard({ review }) {
         </div>
     );
 }
-
 
 export default ReviewCard;

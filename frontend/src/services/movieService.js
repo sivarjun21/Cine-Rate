@@ -1,67 +1,31 @@
 import API from "../api/axios";
 
-
+// Trending movies
 export const getTrendingMovies = async () => {
 
-    try {
+    const response = await API.get(
+        "/movies/trending"
+    );
 
-        const response = await API.get(
-            "/movies/trending"
-        );
-
-        return response.data.results || [];
-
-    } catch (error) {
-
-        console.error(
-            "Failed to fetch trending movies:",
-            error
-        );
-
-        return [];
-    }
+    return response.data;
 };
 
-
+// Search movies
 export const searchMovies = async (query) => {
 
-    try {
+    const response = await API.get(
+        `/movies/search?query=${query}`
+    );
 
-        const response = await API.get(
-            `/movies/search?query=${query}`
-        );
-
-        return response.data.results || [];
-
-    } catch (error) {
-
-        console.error(
-            "Failed to search movies:",
-            error
-        );
-
-        return [];
-    }
+    return response.data;
 };
 
+// Movie details
+export const getMovieById = async (id) => {
 
-export const getMovieById = async (movieId) => {
+    const response = await API.get(
+        `/movies/${id}`
+    );
 
-    try {
-
-        const response = await API.get(
-            `/movies/${movieId}`
-        );
-
-        return response.data;
-
-    } catch (error) {
-
-        console.error(
-            "Failed to fetch movie details:",
-            error
-        );
-
-        throw error;
-    }
+    return response.data;
 };
