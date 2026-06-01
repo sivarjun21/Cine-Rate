@@ -29,11 +29,13 @@ def register_user(
     user_data: RegisterRequest,
     db: Session = Depends(get_db)
 ):
+
     existing_user = db.query(User).filter(
         User.email == user_data.email
     ).first()
 
     if existing_user:
+
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="Email already registered"
@@ -66,11 +68,13 @@ def login_user(
     form_data: OAuth2PasswordRequestForm = Depends(),
     db: Session = Depends(get_db)
 ):
+
     user = db.query(User).filter(
         User.email == form_data.username
     ).first()
 
     if not user:
+
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Invalid email or password"
@@ -82,6 +86,7 @@ def login_user(
     )
 
     if not valid_password:
+
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Invalid email or password"
@@ -94,6 +99,10 @@ def login_user(
     )
 
     return {
+
         "access_token": access_token,
-        "token_type": "bearer"
+
+        "token_type": "bearer",
+
+        "username": user.username
     }

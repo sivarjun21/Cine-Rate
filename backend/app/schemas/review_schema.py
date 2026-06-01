@@ -5,6 +5,7 @@ from datetime import datetime
 
 
 class ReviewBase(BaseModel):
+
     rating: float = Field(
         ge=1,
         le=10
@@ -14,14 +15,26 @@ class ReviewBase(BaseModel):
 
 
 class ReviewCreate(ReviewBase):
+
     movie_id: int
+
+    movie_title: str
+
+    username: str
 
 
 class ReviewResponse(ReviewBase):
+
     id: int
+
     user_id: int
+
     movie_id: int
+
+    movie_title: str
+
     created_at: datetime
 
     class Config:
+
         from_attributes = True

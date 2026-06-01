@@ -38,7 +38,7 @@ const Login = () => {
 
             localStorage.setItem(
                 "username",
-                email.split("@")[0]
+                response.data.username
             );
 
             localStorage.setItem(

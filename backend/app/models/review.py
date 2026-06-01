@@ -1,9 +1,10 @@
 from sqlalchemy import Column
 from sqlalchemy import Integer
-from sqlalchemy import ForeignKey
+from sqlalchemy import String
 from sqlalchemy import Text
 from sqlalchemy import Float
 from sqlalchemy import DateTime
+from sqlalchemy import ForeignKey
 
 from sqlalchemy.orm import relationship
 
@@ -13,6 +14,7 @@ from app.core.database import Base
 
 
 class Review(Base):
+
     __tablename__ = "reviews"
 
     id = Column(
@@ -29,7 +31,11 @@ class Review(Base):
 
     movie_id = Column(
         Integer,
-        ForeignKey("movies.id"),
+        nullable=False
+    )
+
+    movie_title = Column(
+        String,
         nullable=False
     )
 
@@ -48,5 +54,3 @@ class Review(Base):
     )
 
     user = relationship("User")
-
-    movie = relationship("Movie")
