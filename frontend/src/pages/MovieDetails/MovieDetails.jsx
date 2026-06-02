@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
 
-import { useParams } from "react-router-dom";
+import {
+    useParams,
+    useNavigate
+} from "react-router-dom";
 
 import ReviewCard from "../../components/ReviewCard/ReviewCard";
 
@@ -19,6 +22,8 @@ import "./MovieDetails.css";
 function MovieDetails() {
 
     const { id } = useParams();
+
+    const navigate = useNavigate();
 
     const [movie, setMovie] = useState(null);
 
@@ -101,6 +106,26 @@ function MovieDetails() {
 
         event.preventDefault();
 
+        const username =
+            localStorage.getItem(
+                "username"
+            );
+
+        if (!username) {
+
+            const goToLogin =
+                window.confirm(
+                    "You must login before posting a review.\n\nPress OK to login."
+                );
+
+            if (goToLogin) {
+
+                navigate("/login");
+            }
+
+            return;
+        }
+
         try {
 
             const reviewPayload = {
@@ -117,9 +142,7 @@ function MovieDetails() {
                     reviewData.review_text,
 
                 username:
-                    localStorage.getItem(
-                        "username"
-                    )
+                    username
             };
 
             await createReview(
@@ -140,6 +163,7 @@ function MovieDetails() {
             console.log(error);
 
             alert(
+                error?.response?.data?.detail ||
                 "Failed to submit review"
             );
         }
@@ -186,7 +210,6 @@ function MovieDetails() {
                     className="details-poster"
                 />
 
-
                 <div className="details-info">
 
                     <h1>
@@ -211,7 +234,6 @@ function MovieDetails() {
                 </div>
 
             </div>
-
 
             <div className="review-form-container">
 
@@ -242,7 +264,6 @@ function MovieDetails() {
                         required
                     />
 
-
                     <textarea
                         name="review_text"
 
@@ -253,7 +274,6 @@ function MovieDetails() {
                         onChange={handleChange}
                     />
 
-
                     <button type="submit">
                         Submit Review
                     </button>
@@ -261,7 +281,6 @@ function MovieDetails() {
                 </form>
 
             </div>
-
 
             <div className="reviews-section">
 
@@ -293,6 +312,5 @@ function MovieDetails() {
         </div>
     );
 }
-
 
 export default MovieDetails;

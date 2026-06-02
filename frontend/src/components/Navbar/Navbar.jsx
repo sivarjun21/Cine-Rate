@@ -11,6 +11,9 @@ function Navbar() {
     const email =
         localStorage.getItem("email");
 
+    const isLoggedIn =
+        username && email;
+
 
     return (
 
@@ -23,40 +26,53 @@ function Navbar() {
                 CineRate
             </Link>
 
+            {
+                isLoggedIn ? (
 
-            <div className="profile-container">
+                    <div className="profile-container">
 
-                <div className="profile-icon">
-                    👤
-                </div>
+                        <div className="profile-icon">
+                            👤
+                        </div>
 
+                        <div className="profile-dropdown">
 
-                <div className="profile-dropdown">
+                            <p>
+                                <strong>
+                                    Username:
+                                </strong>{" "}
+                                {username}
+                            </p>
 
-                    <p>
-                        <strong>
-                            Username:
-                        </strong>{" "}
-                        {username}
-                    </p>
+                            <p>
+                                <strong>
+                                    Email:
+                                </strong>{" "}
+                                {email}
+                            </p>
 
-                    <p>
-                        <strong>
-                            Email:
-                        </strong>{" "}
-                        {email}
-                    </p>
+                            <Link
+                                to="/profile"
+                                className="profile-link"
+                            >
+                                View Profile
+                            </Link>
+
+                        </div>
+
+                    </div>
+
+                ) : (
 
                     <Link
-                        to="/profile"
+                        to="/login"
                         className="profile-link"
                     >
-                        View Profile
+                        Login
                     </Link>
 
-                </div>
-
-            </div>
+                )
+            }
 
         </nav>
     );

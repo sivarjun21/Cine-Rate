@@ -1,11 +1,15 @@
 import { useEffect, useState } from "react";
 
+import { useNavigate } from "react-router-dom";
+
 import API from "../../api/axios";
 
 import "./Profile.css";
 
 
 function Profile() {
+
+    const navigate = useNavigate();
 
     const [reviews, setReviews] = useState([]);
 
@@ -18,9 +22,24 @@ function Profile() {
 
     useEffect(() => {
 
+        if (!username) {
+
+            navigate("/login");
+
+            return;
+        }
+
         fetchReviews();
 
     }, []);
+
+
+    const handleLogout = () => {
+
+        localStorage.clear();
+
+        navigate("/login");
+    };
 
 
     const fetchReviews = async () => {
@@ -66,12 +85,26 @@ function Profile() {
                 Email: {email}
             </h3>
 
+            <button
+                onClick={handleLogout}
+                style={{
+                    padding: "10px 20px",
+                    backgroundColor: "#dc2626",
+                    color: "white",
+                    border: "none",
+                    borderRadius: "8px",
+                    cursor: "pointer",
+                    marginBottom: "20px"
+                }}
+            >
+                Logout
+            </button>
+
             <h2>
                 Reviews Given:
                 {" "}
                 {reviews.length}
             </h2>
-
 
             <div className="reviews-list">
 
@@ -119,6 +152,5 @@ function Profile() {
         </div>
     );
 }
-
 
 export default Profile;
