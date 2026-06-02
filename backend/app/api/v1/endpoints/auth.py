@@ -1,22 +1,43 @@
+print("AUTH 1")
 from fastapi import APIRouter
+
+print("AUTH 2")
 from fastapi import Depends
+
+print("AUTH 3")
 from fastapi import HTTPException
+
+print("AUTH 4")
 from fastapi import status
 
+print("AUTH 5")
 from fastapi.security import OAuth2PasswordRequestForm
 
+print("AUTH 6")
 from sqlalchemy.orm import Session
 
+print("AUTH 7")
 from app.core.database import get_db
+
+print("AUTH 8")
 from app.core.security import hash_password
+
+print("AUTH 9")
 from app.core.security import verify_password
+
+print("AUTH 10")
 from app.core.security import create_access_token
 
+print("AUTH 11")
 from app.models.user import User
 
+print("AUTH 12")
 from app.schemas.auth_schema import RegisterRequest
+
+print("AUTH 13")
 from app.schemas.token_schema import Token
 
+print("AUTH 14")
 
 router = APIRouter()
 

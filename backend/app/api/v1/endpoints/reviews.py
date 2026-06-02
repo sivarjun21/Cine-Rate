@@ -1,15 +1,27 @@
 from fastapi import APIRouter
+
+print("REVIEWS 1")
 from fastapi import Depends
+
+print("REVIEWS 2")
 from fastapi import HTTPException
 
+print("REVIEWS 3")
 from sqlalchemy.orm import Session
 
+print("REVIEWS 4")
 from app.core.database import get_db
 
+print("REVIEWS 5")
 from app.models.review import Review
+
+print("REVIEWS 6")
 from app.models.user import User
 
+print("REVIEWS 7")
 from app.schemas.review_schema import ReviewCreate
+
+print("REVIEWS 8")
 
 
 router = APIRouter()

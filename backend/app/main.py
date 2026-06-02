@@ -1,18 +1,23 @@
-from fastapi import FastAPI
-from fastapi.middleware.cors import CORSMiddleware
-
+print("1")
 from app.api.v1.router import api_router
 
+print("2")
 from app.core.database import Base
+
+print("3")
 from app.core.database import engine
 
-# Import models so SQLAlchemy creates tables
+print("4")
 from app.models.user import User
+
+print("5")
 from app.models.movie import Movie
+
+print("6")
 from app.models.review import Review
-
-
-# Create tables
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+print("7")
 Base.metadata.create_all(
     bind=engine
 )
@@ -21,8 +26,6 @@ Base.metadata.create_all(
 app = FastAPI(
     title="CineRate API"
 )
-
-
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[

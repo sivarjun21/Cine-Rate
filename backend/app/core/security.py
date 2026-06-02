@@ -1,10 +1,16 @@
+print("SEC 1")
 from datetime import datetime, timedelta, timezone
 
+print("SEC 2")
 from jose import jwt
+
+print("SEC 3")
 from passlib.context import CryptContext
 
+print("SEC 4")
 from app.core.config import settings
 
+print("SEC 5")
 
 pwd_context = CryptContext(
     schemes=["bcrypt"],

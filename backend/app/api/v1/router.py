@@ -1,9 +1,18 @@
 from fastapi import APIRouter
 
+print("BEFORE MOVIES")
 from app.api.v1.endpoints import movies
-from app.api.v1.endpoints import reviews
-from app.api.v1.endpoints import auth
+print("AFTER MOVIES")
 
+print("BEFORE REVIEWS")
+from app.api.v1.endpoints import reviews
+print("AFTER REVIEWS")
+
+print("BEFORE AUTH")
+from app.api.v1.endpoints import auth
+print("AFTER AUTH")
+
+api_router = APIRouter()
 
 api_router = APIRouter()
 
